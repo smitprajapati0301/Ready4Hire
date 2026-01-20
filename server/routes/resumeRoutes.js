@@ -9,8 +9,8 @@ const router = express.Router();
 
 router.post("/upload", upload.single("resume"), async (req, res) => {
   try {
-    // Import gemini.js HERE - after dotenv.config() has run
-    const ai = (await import("../config/gemini.js")).default;
+    // Import groq.js HERE - after dotenv.config() has run
+    const groq = (await import("../config/groq.js")).default;
 
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
@@ -63,9 +63,17 @@ Resume Text:
 ${text}
 `;
 
-    const model = ai.getGenerativeModel({ model: "gemini-2.5-flash" });
-    const result = await model.generateContent(prompt);
-    const response = result.response.text();
+    const result = await groq.chat.completions.create({
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      model: "llama-3.1-8b-instant",
+    });
+
+    const response = result.choices[0].message.content;
 
     const clean = response.replace(/```json|```/g, "").trim();
     const aiResult = JSON.parse(clean);
@@ -74,10 +82,10 @@ ${text}
       ...aiResult,
       rawText: text,
     });
-// after you save to MongoDB and before res.json(...)
-fs.unlink(req.file.path, (err) => {
-  if (err) console.error("Failed to delete file:", err);
-});
+    // after you save to MongoDB and before res.json(...)
+    fs.unlink(req.file.path, (err) => {
+      if (err) console.error("Failed to delete file:", err);
+    });
 
 
     res.json(saved);
