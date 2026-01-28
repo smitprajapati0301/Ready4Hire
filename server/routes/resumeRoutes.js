@@ -29,23 +29,23 @@ router.post("/upload", upload.single("resume"), async (req, res) => {
     }
 
     // AI Prompt
-    const prompt = `
-You are an ATS resume analyzer.
+  const prompt = `
+You are a senior career mentor who reviews resumes every day.
 
-From the resume text below, extract:
-- name
-- email
-- skills (array)
-- projects (array or null)
-- education (array or null)
-- experience (array or null)
+Mindset rules:
+- Do NOT assume anything that is not explicitly missing.
+- Do NOT guess or hallucinate missing sections.
+- Only list something in "missing" if it is clearly NOT present in the resume text.
+- If the resume mentions hackathons, achievements, projects, or goals in any form,
+  you MUST NOT mark them as missing.
+- Base every decision strictly on what appears in the resume text.
 
-Then:
-- Give ATS score (0–100)
-- List missing sections
-- Give 3 improvement suggestions
+Analyze the resume below:
 
-Return ONLY valid JSON in this format:
+${text}
+
+Now return ONLY valid JSON in the exact format below.
+No explanations. No markdown. No extra text.
 
 {
   "name": "",
@@ -59,9 +59,31 @@ Return ONLY valid JSON in this format:
   "suggestions": []
 }
 
-Resume Text:
-${text}
+Rules for fields:
+
+- "atsScore": number between 0–100.
+  Consider:
+  - Education (marks / CGPA if present)
+  - Skills & relevance
+  - Projects / experience
+  - Resume clarity
+  - Domain readiness
+  Adjust fairly based on the person’s stage.
+
+- "missing":
+  - Include ONLY sections that are truly absent.
+  - If hackathons are mentioned anywhere, DO NOT list "Hackathons" or "Achievements".
+  - If an objective or summary exists in any form, DO NOT list "Career objective".
+
+- "suggestions":
+  - Must be human and mentor-like.
+  - Must relate to what actually exists or is truly missing.
+  - Do not contradict the resume content.
+
+Output ONLY the JSON object.
 `;
+
+
 
     const result = await groq.chat.completions.create({
       messages: [

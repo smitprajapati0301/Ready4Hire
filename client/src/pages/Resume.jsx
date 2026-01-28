@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Resume() {
+  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -18,11 +20,19 @@ export default function Resume() {
       formData.append("resume", file);
 
       const res = await axios.post(
-        "http://localhost:3000/api/resume/upload",
-        formData
-      );
+  "http://localhost:3000/api/resume/upload",
+  formData
+);
 
-      setResult(res.data);
+setResult(res.data);
+
+// DEBUG
+console.log("Upload response:", res.data);
+
+// Save resumeId
+localStorage.setItem("latestResumeId", res.data._id);
+
+
     } catch (err) {
       console.error(err);
       setError("Something went wrong");
@@ -35,25 +45,25 @@ export default function Resume() {
     <div className="min-h-screen p-8">
       <h2 className="text-2xl font-bold mb-4">Upload Resume</h2>
 
-     <input
-  type="file"
-  accept="application/pdf"
-  onChange={(e) => {
-    const selected = e.target.files[0];
+      <input
+        type="file"
+        accept="application/pdf"
+        onChange={(e) => {
+          const selected = e.target.files[0];
 
-    if (!selected) return;
+          if (!selected) return;
 
-    if (selected.type !== "application/pdf") {
-      setError("Please upload a PDF file only");
-      setFile(null);
-      e.target.value = null;
-      return;
-    }
+          if (selected.type !== "application/pdf") {
+            setError("Please upload a PDF file only");
+            setFile(null);
+            e.target.value = null;
+            return;
+          }
 
-    setError("");
-    setFile(selected);
-  }}
-/>
+          setError("");
+          setFile(selected);
+        }}
+      />
 
 
       <button
@@ -94,6 +104,13 @@ export default function Resume() {
             <p><b>Email:</b> {result.email}</p>
             <p><b>Skills:</b> {result.skills.join(", ")}</p>
           </div>
+
+          <button
+            onClick={() => navigate("/interview")}
+            className="mt-6 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg w-full sm:w-auto"
+          >
+            Start Mock Interview
+          </button>
         </div>
       )}
     </div>
