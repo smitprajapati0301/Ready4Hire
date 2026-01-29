@@ -55,8 +55,8 @@ export default function Landing() {
                 workflow. <span className="text-[#629FAD] font-semibold">Think of us as your career GPS—minus the annoying "recalculating" voice.</span>
               </p>
               <div className="flex flex-col gap-4 sm:flex-row">
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   onClick={() => navigate("/resume")}
                   className="bg-linear-to-r from-[#629FAD] to-[#296374] hover:from-[#7bb6c3] hover:to-[#3a7a8a] text-white transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-[#629FAD]/50"
                 >
@@ -106,8 +106,8 @@ export default function Landing() {
           />
           <div ref={stepsRef} className="mt-12 grid gap-8 opacity-0 md:grid-cols-3">
             {steps.map((step, index) => (
-              <Card 
-                key={step.title} 
+              <Card
+                key={step.title}
                 className="p-8 bg-white/10 backdrop-blur-lg border-[#629FAD]/30 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-[#629FAD]/20 hover:border-[#629FAD]/50 group"
               >
                 <div className="flex items-center justify-between mb-6">

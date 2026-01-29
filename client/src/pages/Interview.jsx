@@ -186,7 +186,7 @@ export default function Interview() {
               <p className="text-xs text-[#629FAD]">Real-time AI feedback</p>
             </div>
           </div>
-          
+
           {/* Question Counter */}
           <div className="flex items-center gap-2">
             <span className="text-sm text-[#EDEDCE] font-medium">Question</span>
@@ -211,14 +211,14 @@ export default function Interview() {
                   </div>
                   <span className="text-[#629FAD] font-semibold text-sm">READY TO PRACTICE?</span>
                 </div>
-                
+
                 <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
                   Start Your Mock Interview
                 </h2>
                 <p className="text-[#EDEDCE]/80 text-lg mb-8">
                   Get real-time feedback from our AI interviewer. Practice common questions, refine your answers, and boost your confidence.
                 </p>
-                
+
                 {/* Resume selection */}
                 {resumeData && (
                   <div className="mb-8 p-4 rounded-xl bg-[#296374]/20 border border-[#629FAD]/30">
@@ -226,7 +226,7 @@ export default function Interview() {
                     <p className="text-white font-semibold">{resumeData.fileName || "Resume uploaded"}</p>
                   </div>
                 )}
-                
+
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     onClick={startInterview}
@@ -235,15 +235,14 @@ export default function Interview() {
                   >
                     {loading ? "Starting..." : "Begin Interview"}
                   </button>
-                  
+
                   {/* Voice mode toggle */}
                   <button
                     onClick={() => setVoiceMode(!voiceMode)}
-                    className={`px-6 py-3 font-semibold rounded-lg transition-all duration-200 border-2 flex items-center justify-center gap-2 ${
-                      voiceMode
+                    className={`px-6 py-3 font-semibold rounded-lg transition-all duration-200 border-2 flex items-center justify-center gap-2 ${voiceMode
                         ? "bg-[#629FAD]/20 border-[#629FAD] text-[#629FAD]"
                         : "bg-transparent border-[#629FAD]/30 text-[#EDEDCE] hover:border-[#629FAD]/50"
-                    }`}
+                      }`}
                   >
                     <FaMicrophone className="text-sm" />
                     Voice Mode
@@ -259,7 +258,7 @@ export default function Interview() {
                   <FiStar className="text-[#629FAD]" />
                   <h3 className="text-white font-bold">Pro Tips</h3>
                 </div>
-                
+
                 <div className="space-y-3">
                   <div className="text-sm text-[#EDEDCE]/80">
                     <span className="font-semibold text-[#629FAD]">STAR Method:</span> Situation, Task, Action, Result
@@ -303,13 +302,12 @@ export default function Interview() {
                         style={{ animationDelay: `${idx * 50}ms` }}
                       >
                         <div
-                          className={`max-w-xs sm:max-w-md px-4 py-3 rounded-lg border transition-all duration-200 ${
-                            message.role === "user"
+                          className={`max-w-xs sm:max-w-md px-4 py-3 rounded-lg border transition-all duration-200 ${message.role === "user"
                               ? "bg-linear-to-r from-[#629FAD] to-[#296374] border-[#629FAD]/50 text-white rounded-br-none"
                               : message.isFeedback
-                              ? "bg-[#296374]/20 border-[#629FAD]/30 text-[#EDEDCE] rounded-bl-none"
-                              : "bg-white/5 border-[#629FAD]/20 text-[#EDEDCE] rounded-bl-none"
-                          }`}
+                                ? "bg-[#296374]/20 border-[#629FAD]/30 text-[#EDEDCE] rounded-bl-none"
+                                : "bg-white/5 border-[#629FAD]/20 text-[#EDEDCE] rounded-bl-none"
+                            }`}
                         >
                           <p className="text-sm leading-relaxed">{message.content}</p>
                           <span className="text-xs opacity-60 mt-2 block">
@@ -322,7 +320,7 @@ export default function Interview() {
                       </div>
                     ))
                   )}
-                  
+
                   {/* Typing indicator */}
                   {loading && interviewId && (
                     <div className="flex justify-start animate-fade-up">
@@ -424,7 +422,7 @@ export default function Interview() {
                   </div>
                   <h3 className="text-white font-bold">Progress</h3>
                 </div>
-                
+
                 <div className="space-y-3">
                   <div>
                     <div className="flex justify-between text-xs mb-2">
@@ -438,7 +436,7 @@ export default function Interview() {
                       ></div>
                     </div>
                   </div>
-                  
+
                   <div className="pt-3 border-t border-[#629FAD]/20">
                     <p className="text-xs text-[#EDEDCE]/60">Typical interview: 5-8 questions</p>
                   </div>
@@ -451,19 +449,18 @@ export default function Interview() {
                   <FaMicrophone className="text-[#629FAD]" />
                   <h3 className="text-white font-bold">Voice Mode</h3>
                 </div>
-                
+
                 <div className="space-y-3">
                   <button
                     onClick={() => setVoiceMode(!voiceMode)}
-                    className={`w-full px-4 py-2 rounded-lg font-semibold transition-all duration-200 text-sm ${
-                      voiceMode
+                    className={`w-full px-4 py-2 rounded-lg font-semibold transition-all duration-200 text-sm ${voiceMode
                         ? "bg-[#629FAD]/20 border border-[#629FAD] text-[#629FAD]"
                         : "bg-transparent border border-[#629FAD]/30 text-[#EDEDCE] hover:border-[#629FAD]/50"
-                    }`}
+                      }`}
                   >
                     {voiceMode ? "✓ Enabled" : "Disabled"}
                   </button>
-                  
+
                   <p className="text-xs text-[#EDEDCE]/60">
                     {voiceMode
                       ? "Speak naturally for 5 seconds. Auto-submit on silence."
@@ -478,7 +475,7 @@ export default function Interview() {
                   <FiStar className="text-[#629FAD]" />
                   Interview Tips
                 </h3>
-                
+
                 <ul className="space-y-2 text-xs text-[#EDEDCE]/80">
                   <li className="flex gap-2">
                     <span className="text-[#629FAD] font-bold">•</span>

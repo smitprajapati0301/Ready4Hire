@@ -31,8 +31,7 @@ export default function SiteShell() {
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
-                  `transition-all duration-200 hover:text-[#629FAD] hover:scale-110 ${
-                    isActive ? "text-[#629FAD] scale-110" : "text-[#EDEDCE]/70"
+                  `transition-all duration-200 hover:text-[#629FAD] hover:scale-110 ${isActive ? "text-[#629FAD] scale-110" : "text-[#EDEDCE]/70"
                   }`
                 }
               >
@@ -57,8 +56,7 @@ export default function SiteShell() {
                   to={item.to}
                   onClick={() => setMenuOpen(false)}
                   className={({ isActive }) =>
-                    `transition-all duration-200 hover:text-[#629FAD] hover:translate-x-2 ${
-                      isActive ? "text-[#629FAD]" : "text-[#EDEDCE]/70"
+                    `transition-all duration-200 hover:text-[#629FAD] hover:translate-x-2 ${isActive ? "text-[#629FAD]" : "text-[#EDEDCE]/70"
                     }`
                   }
                 >
@@ -116,17 +114,17 @@ export default function SiteShell() {
                 <div className="group">
                   <p className="font-semibold text-white mb-1">Smit Prajapati</p>
                   <div className="flex gap-3">
-                    <a 
-                      href="https://www.linkedin.com/in/smit-prajapati-a375a7284/" 
-                      target="_blank" 
+                    <a
+                      href="https://www.linkedin.com/in/smit-prajapati-a375a7284/"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#629FAD] hover:text-white transition-colors duration-200"
                     >
                       LinkedIn
                     </a>
-                    <a 
-                      href="https://github.com/smitprajapati0301" 
-                      target="_blank" 
+                    <a
+                      href="https://github.com/smitprajapati0301"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#629FAD] hover:text-white transition-colors duration-200"
                     >
@@ -137,17 +135,17 @@ export default function SiteShell() {
                 <div className="group">
                   <p className="font-semibold text-white mb-1">Om Patel</p>
                   <div className="flex gap-3">
-                    <a 
-                      href="https://www.linkedin.com/in/om-patel-8aa186284/" 
-                      target="_blank" 
+                    <a
+                      href="https://www.linkedin.com/in/om-patel-8aa186284/"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#629FAD] hover:text-white transition-colors duration-200"
                     >
                       LinkedIn
                     </a>
-                    <a 
-                      href="https://github.com/OMPATEL122006" 
-                      target="_blank" 
+                    <a
+                      href="https://github.com/OMPATEL122006"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#629FAD] hover:text-white transition-colors duration-200"
                     >

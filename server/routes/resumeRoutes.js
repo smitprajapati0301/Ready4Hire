@@ -29,7 +29,7 @@ router.post("/upload", upload.single("resume"), async (req, res) => {
     }
 
     // AI Prompt
-  const prompt = `
+    const prompt = `
 You are a senior career mentor who reviews resumes every day.
 
 Mindset rules:

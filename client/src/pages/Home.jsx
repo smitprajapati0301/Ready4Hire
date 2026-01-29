@@ -26,17 +26,17 @@ export default function Home() {
               🚀 Your AI Career Wingman
             </Badge>
             <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
-              Ready<span className="text-[#629FAD] animate-pulse">4</span>Hire 
+              Ready<span className="text-[#629FAD] animate-pulse">4</span>Hire
               <br />
               <span className="text-[#EDEDCE]">Because "winging it" isn't a strategy</span>
             </h1>
             <p className="text-lg text-[#EDEDCE]/80 sm:text-xl leading-relaxed">
-              Tired of wondering if your resume will get past the robots? We'll help you charm the ATS, 
+              Tired of wondering if your resume will get past the robots? We'll help you charm the ATS,
               ace the interview, and land that dream job. <span className="text-[#629FAD] font-semibold">No sweat. Well, maybe a little.</span>
             </p>
             <div className="flex flex-col gap-4 sm:flex-row">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 onClick={() => navigate("/resume")}
                 className="w-full sm:w-auto bg-linear-to-r from-[#629FAD] to-[#296374] hover:from-[#7bb6c3] hover:to-[#3a7a8a] text-white transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-[#629FAD]/50"
               >
@@ -72,7 +72,7 @@ export default function Home() {
                 <span className="text-[#629FAD]">But for your career.</span>
               </h2>
               <p className="text-[#EDEDCE]/80 text-lg leading-relaxed">
-                No fluff, no filler. Just clean insights, actionable suggestions, and realistic interview 
+                No fluff, no filler. Just clean insights, actionable suggestions, and realistic interview
                 simulations that actually prepare you for the real thing. <span className="text-[#629FAD] font-semibold">Plus, we're available 24/7 without the gym fees.</span>
               </p>
               <div className="mt-8 space-y-4 text-base">
@@ -134,12 +134,12 @@ export default function Home() {
                   Turn your resume into<br />interview-ready confidence.
                 </h3>
                 <p className="text-[#EDEDCE]/80 text-lg max-w-xl">
-                  Upload your resume and begin the AI-guided interview flow in minutes. 
+                  Upload your resume and begin the AI-guided interview flow in minutes.
                   Your future employer is waiting. <span className="text-[#629FAD] font-semibold">(Don't keep them waiting too long!)</span>
                 </p>
               </div>
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 onClick={() => navigate("/resume")}
                 className="bg-linear-to-r from-[#629FAD] to-[#296374] hover:from-[#7bb6c3] hover:to-[#3a7a8a] text-white transform hover:scale-110 transition-all duration-200 shadow-xl hover:shadow-[#629FAD]/50 px-8 py-4"
               >

@@ -35,7 +35,7 @@ export default function Resume() {
     setError("");
     setFile(selectedFile);
     setShowSuccess(true);
-    
+
     // Auto-hide success animation after 3 seconds
     setTimeout(() => setShowSuccess(false), 3000);
   };
@@ -158,13 +158,12 @@ export default function Resume() {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 onClick={() => document.getElementById('resume-upload').click()}
-                className={`group flex cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed p-10 text-center transition-all duration-300 relative overflow-hidden ${
-                  isDragging
+                className={`group flex cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed p-10 text-center transition-all duration-300 relative overflow-hidden ${isDragging
                     ? "border-[#629FAD] bg-[#629FAD]/20 scale-105"
                     : file
-                    ? "border-green-500 bg-green-500/10"
-                    : "border-[#629FAD]/40 bg-[#296374]/20 hover:border-[#629FAD] hover:bg-[#629FAD]/10 hover:scale-105"
-                }`}
+                      ? "border-green-500 bg-green-500/10"
+                      : "border-[#629FAD]/40 bg-[#296374]/20 hover:border-[#629FAD] hover:bg-[#629FAD]/10 hover:scale-105"
+                  }`}
               >
                 {/* Success Animation Overlay */}
                 {showSuccess && (
@@ -178,18 +177,17 @@ export default function Resume() {
                   </div>
                 )}
 
-                <div className={`flex h-16 w-16 items-center justify-center rounded-2xl ${
-                  file ? "bg-green-500" : "bg-linear-to-br from-[#629FAD] to-[#296374]"
-                } text-white shadow-lg group-hover:scale-110 transition-all duration-300 pointer-events-none`}>
+                <div className={`flex h-16 w-16 items-center justify-center rounded-2xl ${file ? "bg-green-500" : "bg-linear-to-br from-[#629FAD] to-[#296374]"
+                  } text-white shadow-lg group-hover:scale-110 transition-all duration-300 pointer-events-none`}>
                   {file ? <FiCheckCircle size={28} /> : <FiUploadCloud size={28} />}
                 </div>
                 <div className="space-y-2 pointer-events-none">
                   <p className="text-base font-semibold text-white group-hover:text-[#629FAD] transition-colors duration-300">
-                    {file 
-                      ? "✓ File ready to analyze!" 
-                      : isDragging 
-                      ? "Drop it like it's hot! 🔥" 
-                      : "Drop your resume here or click to browse"
+                    {file
+                      ? "✓ File ready to analyze!"
+                      : isDragging
+                        ? "Drop it like it's hot! 🔥"
+                        : "Drop your resume here or click to browse"
                     }
                   </p>
                   <p className="text-sm text-[#EDEDCE]/70">{fileMeta}</p>
