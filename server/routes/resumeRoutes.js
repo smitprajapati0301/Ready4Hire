@@ -100,8 +100,38 @@ Output ONLY the JSON object.
     const clean = response.replace(/```json|```/g, "").trim();
     const aiResult = JSON.parse(clean);
 
+    const normalizeArray = (value) => (Array.isArray(value) ? value : []);
+
+    const normalizeProjects = normalizeArray(aiResult.projects).map((item) => {
+      if (typeof item === "string") {
+        return { name: item };
+      }
+      return item;
+    });
+
+    const normalizeEducation = normalizeArray(aiResult.education).map((item) => {
+      if (typeof item === "string") {
+        return { institution: item };
+      }
+      // Convert dates array to string if needed
+      if (Array.isArray(item.dates)) {
+        item.dates = item.dates.join(" - ");
+      }
+      return item;
+    });
+
+    const normalizeExperience = normalizeArray(aiResult.experience).map((item) => {
+      if (typeof item === "string") {
+        return { company: item, description: [] };
+      }
+      return item;
+    });
+
     const saved = await Resume.create({
       ...aiResult,
+      projects: normalizeProjects,
+      education: normalizeEducation,
+      experience: normalizeExperience,
       rawText: text,
     });
     // after you save to MongoDB and before res.json(...)
