@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FiUploadCloud, FiCheckCircle } from "react-icons/fi";
+import { useAuth } from "../context/AuthContext";
 import Badge from "../components/ui/Badge";
 import Button from "../components/ui/Button";
 import Card from "../components/ui/Card";
@@ -12,6 +13,7 @@ import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
 export default function Resume() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -21,6 +23,8 @@ export default function Resume() {
   const sectionRef = useScrollAnimation(0, "fade-up");
   const uploadRef = useScrollAnimation(100, "scale-in");
   const resultRef = useScrollAnimation(100, "blur-in");
+
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
   const handleFileSelect = (selectedFile) => {
     if (!selectedFile) return;
@@ -76,9 +80,14 @@ export default function Resume() {
       const formData = new FormData();
       formData.append("resume", file);
 
+      const idToken = localStorage.getItem("idToken");
+
       const res = await axios.post(
-        "http://localhost:3000/api/resume/upload",
-        formData
+        `${BACKEND_URL}/api/resume/upload`,
+        formData,
+        {
+          headers: { Authorization: `Bearer ${idToken}` },
+        }
       );
 
       // DEBUG - Log the full response
@@ -159,10 +168,10 @@ export default function Resume() {
                 onDrop={handleDrop}
                 onClick={() => document.getElementById('resume-upload').click()}
                 className={`group flex cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed p-10 text-center transition-all duration-300 relative overflow-hidden ${isDragging
-                    ? "border-[#629FAD] bg-[#629FAD]/20 scale-105"
-                    : file
-                      ? "border-green-500 bg-green-500/10"
-                      : "border-[#629FAD]/40 bg-[#296374]/20 hover:border-[#629FAD] hover:bg-[#629FAD]/10 hover:scale-105"
+                  ? "border-[#629FAD] bg-[#629FAD]/20 scale-105"
+                  : file
+                    ? "border-green-500 bg-green-500/10"
+                    : "border-[#629FAD]/40 bg-[#296374]/20 hover:border-[#629FAD] hover:bg-[#629FAD]/10 hover:scale-105"
                   }`}
               >
                 {/* Success Animation Overlay */}

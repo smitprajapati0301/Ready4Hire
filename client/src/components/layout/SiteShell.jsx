@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import Container from "../ui/Container";
 
 const navItems = [
@@ -11,6 +12,18 @@ const navItems = [
 
 export default function SiteShell() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user, firebaseUser, logout } = useAuth();
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  // Get user initials from name
+  const getInitials = (name) => {
+    if (!name) return "U";
+    const parts = name.trim().split(" ");
+    if (parts.length >= 2) {
+      return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+    }
+    return parts[0][0].toUpperCase();
+  };
 
   return (
     <div className="min-h-screen bg-[#0C2C55] text-[#EDEDCE]">
@@ -39,6 +52,65 @@ export default function SiteShell() {
               </NavLink>
             ))}
           </nav>
+
+          {/* User Profile Avatar or Auth Buttons */}
+          <div className="hidden md:flex items-center gap-4">
+            {user ? (
+              <div className="relative">
+                <button
+                  onClick={() => setShowDropdown(!showDropdown)}
+                  className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                >
+                  {firebaseUser?.photoURL ? (
+                    <img
+                      src={firebaseUser.photoURL}
+                      alt={user.name}
+                      className="h-10 w-10 rounded-full border-2 border-[#629FAD] shadow-lg object-cover"
+                    />
+                  ) : (
+                    <div className="h-10 w-10 rounded-full bg-linear-to-br from-[#629FAD] to-[#296374] flex items-center justify-center text-white font-bold text-sm border-2 border-[#629FAD] shadow-lg">
+                      {getInitials(user.name)}
+                    </div>
+                  )}
+                  <span className="text-sm text-[#EDEDCE] font-medium">{user.name?.split(" ")[0]}</span>
+                </button>
+
+                {showDropdown && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 z-50">
+                    <div className="px-4 py-2 border-b border-slate-200">
+                      <p className="text-sm font-semibold text-slate-900">{user.name}</p>
+                      <p className="text-xs text-slate-500">{user.email}</p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setShowDropdown(false);
+                        logout();
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <NavLink
+                  to="/login"
+                  className="px-4 py-2 text-sm font-semibold text-[#EDEDCE] hover:text-[#629FAD] transition-colors"
+                >
+                  Login
+                </NavLink>
+                <NavLink
+                  to="/signup"
+                  className="px-4 py-2 text-sm font-semibold bg-linear-to-br from-[#629FAD] to-[#296374] text-white rounded-lg hover:scale-105 transition-transform shadow-lg"
+                >
+                  Sign Up
+                </NavLink>
+              </div>
+            )}
+          </div>
+
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
             className="inline-flex h-11 w-11 items-center justify-center rounded-xl border-2 border-[#629FAD]/30 text-[#629FAD] transition-all duration-200 hover:border-[#629FAD] hover:bg-[#629FAD]/10 hover:scale-110 md:hidden"
@@ -63,6 +135,55 @@ export default function SiteShell() {
                   {item.label}
                 </NavLink>
               ))}
+
+              {/* Mobile User Profile or Auth Buttons */}
+              {user ? (
+                <div className="mt-4 pt-4 border-t border-[#629FAD]/20">
+                  <div className="flex items-center gap-3 mb-3">
+                    {firebaseUser?.photoURL ? (
+                      <img
+                        src={firebaseUser.photoURL}
+                        alt={user.name}
+                        className="h-10 w-10 rounded-full border-2 border-[#629FAD] object-cover"
+                      />
+                    ) : (
+                      <div className="h-10 w-10 rounded-full bg-linear-to-br from-[#629FAD] to-[#296374] flex items-center justify-center text-white font-bold text-sm border-2 border-[#629FAD]">
+                        {getInitials(user.name)}
+                      </div>
+                    )}
+                    <div>
+                      <p className="text-sm font-semibold text-white">{user.name}</p>
+                      <p className="text-xs text-[#629FAD]">{user.email}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setMenuOpen(false);
+                      logout();
+                    }}
+                    className="w-full text-left py-2 text-sm text-red-400 hover:text-red-300 transition-colors"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <div className="mt-4 pt-4 border-t border-[#629FAD]/20 flex flex-col gap-3">
+                  <NavLink
+                    to="/login"
+                    onClick={() => setMenuOpen(false)}
+                    className="w-full text-center py-2 px-4 text-sm font-semibold text-[#EDEDCE] border border-[#629FAD] rounded-lg hover:bg-[#629FAD]/10 transition-colors"
+                  >
+                    Login
+                  </NavLink>
+                  <NavLink
+                    to="/signup"
+                    onClick={() => setMenuOpen(false)}
+                    className="w-full text-center py-2 px-4 text-sm font-semibold bg-linear-to-br from-[#629FAD] to-[#296374] text-white rounded-lg hover:scale-105 transition-transform shadow-lg"
+                  >
+                    Sign Up
+                  </NavLink>
+                </div>
+              )}
             </Container>
           </div>
         )}

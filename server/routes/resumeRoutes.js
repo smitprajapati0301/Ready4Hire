@@ -129,6 +129,7 @@ Output ONLY the JSON object.
 
     const saved = await Resume.create({
       ...aiResult,
+      userId: req.user.uid, // Add Firebase UID
       projects: normalizeProjects,
       education: normalizeEducation,
       experience: normalizeExperience,

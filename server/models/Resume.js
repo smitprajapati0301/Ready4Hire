@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const resumeSchema = new mongoose.Schema(
   {
+    userId: {
+      type: String, // Firebase UID
+      required: true,
+      index: true,
+    },
     name: String,
     email: String,
     skills: [String],
@@ -9,7 +14,7 @@ const resumeSchema = new mongoose.Schema(
       {
         name: String,
         technologies: [String],
-        description: String,
+        description: [String], // Changed to array to match AI parser output
         link: String,
       },
     ],

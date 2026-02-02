@@ -6,16 +6,20 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import resumeRoutes from "./routes/resumeRoutes.js";
 import interviewRoutes from "./routes/InterviewRoutes.js";
-
-
+import userRoutes from "./routes/userRoutes.js";
+import verifyFirebaseToken from "./middlewares/auth.js";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/resume", resumeRoutes);
-app.use("/api/interview", interviewRoutes);
+// Public routes
+app.use("/api/users", userRoutes); // POST /create doesn't need token, GET /:uid needs token
+
+// Protected routes (require Firebase token)
+app.use("/api/resume", verifyFirebaseToken, resumeRoutes);
+app.use("/api/interview", verifyFirebaseToken, interviewRoutes);
 
 connectDB();
 

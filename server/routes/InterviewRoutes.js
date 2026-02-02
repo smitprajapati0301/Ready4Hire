@@ -22,6 +22,11 @@ router.post("/start", async (req, res) => {
       return res.status(404).json({ message: "Resume not found" });
     }
 
+    // Verify resume belongs to this user
+    if (resume.userId !== req.user.uid) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
     const prompt = `
 You are an interview bot.
 
@@ -47,6 +52,7 @@ Return only the question text.
     const question = result.choices[0].message.content.trim();
 
     const log = await InterviewLog.create({
+      userId: req.user.uid,
       resumeId,
       domain,
       questions: [question],
@@ -72,6 +78,11 @@ router.post("/answer", async (req, res) => {
     const log = await InterviewLog.findById(interviewId);
     if (!log) {
       return res.status(404).json({ message: "Interview not found" });
+    }
+
+    // Verify interview belongs to this user
+    if (log.userId !== req.user.uid) {
+      return res.status(403).json({ message: "Access denied" });
     }
 
     const resume = await Resume.findById(log.resumeId);
