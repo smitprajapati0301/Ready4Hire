@@ -58,7 +58,7 @@ export default function Landing() {
                 <Button
                   size="lg"
                   onClick={() => navigate("/resume")}
-                  className="bg-linear-to-r from-[#629FAD] to-[#296374] hover:from-[#7bb6c3] hover:to-[#3a7a8a] text-white transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-[#629FAD]/50"
+                  className="bg-linear-to-r from-[#629FAD] to-[#296374] hover:from-[#7bb6c3] hover:to-[#3a7a8a] text-white font-bold transform hover:scale-105 transition-all duration-200 shadow-xl hover:shadow-2xl hover:shadow-[#629FAD]/60"
                 >
                   🚀 Start now
                 </Button>
@@ -66,29 +66,29 @@ export default function Landing() {
                   size="lg"
                   variant="outline"
                   onClick={() => navigate("/interview")}
-                  className="border-[#629FAD] bg-transparent text-[#629FAD] hover:bg-[#629FAD]/10 transform hover:scale-105 transition-all duration-200"
+                  className="border-2 border-[#629FAD] bg-[#629FAD]/10 backdrop-blur-sm text-white hover:bg-[#629FAD] hover:border-[#7bb6c3] font-bold transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl hover:shadow-[#629FAD]/40"
                 >
                   🎤 Jump to interview
                 </Button>
               </div>
             </div>
             <div className="grid gap-6 animate-scale-in">
-              <Card className="p-8 bg-white/10 backdrop-blur-lg border-[#629FAD]/30 hover:border-[#629FAD]/50 transition-all duration-300 transform hover:scale-105">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#629FAD]">
+              <Card className="p-8 bg-gradient-to-br from-[#0C2C55]/95 to-[#296374]/90 backdrop-blur-xl border-2 border-[#629FAD]/50 hover:border-[#629FAD]/80 transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl hover:shadow-[#629FAD]/30">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#629FAD] drop-shadow-lg">
                   📈 AI INSIGHTS
                 </p>
-                <p className="mt-4 text-5xl font-bold text-white">+32%</p>
-                <p className="mt-3 text-base text-[#EDEDCE]/80">
-                  Average ATS improvement after applying suggestions. <span className="text-[#629FAD]">(The robots approve!)</span>
+                <p className="mt-4 text-5xl font-bold text-white drop-shadow-lg">+32%</p>
+                <p className="mt-3 text-base text-[#EDEDCE] leading-relaxed">
+                  Average ATS improvement after applying suggestions. <span className="text-[#629FAD] font-semibold">(The robots approve!)</span>
                 </p>
               </Card>
-              <Card className="p-8 bg-white/10 backdrop-blur-lg border-[#629FAD]/30 hover:border-[#629FAD]/50 transition-all duration-300 transform hover:scale-105">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#629FAD]">
+              <Card className="p-8 bg-gradient-to-br from-[#296374]/95 to-[#0C2C55]/90 backdrop-blur-xl border-2 border-[#629FAD]/50 hover:border-[#629FAD]/80 transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl hover:shadow-[#629FAD]/30">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#629FAD] drop-shadow-lg">
                   ⚡ INTERVIEW READY
                 </p>
-                <p className="mt-4 text-5xl font-bold text-white">10 min</p>
-                <p className="mt-3 text-base text-[#EDEDCE]/80">
-                  Typical time to start your first mock interview. <span className="text-[#629FAD]">(Faster than your coffee break!)</span>
+                <p className="mt-4 text-5xl font-bold text-white drop-shadow-lg">10 min</p>
+                <p className="mt-3 text-base text-[#EDEDCE] leading-relaxed">
+                  Typical time to start your first mock interview. <span className="text-[#629FAD] font-semibold">(Faster than your coffee break!)</span>
                 </p>
               </Card>
             </div>
@@ -108,7 +108,7 @@ export default function Landing() {
             {steps.map((step, index) => (
               <Card
                 key={step.title}
-                className="p-8 bg-white/10 backdrop-blur-lg border-[#629FAD]/30 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-[#629FAD]/20 hover:border-[#629FAD]/50 group"
+                className="p-8 bg-gradient-to-br from-[#296374]/90 to-[#0C2C55]/95 backdrop-blur-xl border-2 border-[#629FAD]/40 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#629FAD]/30 hover:border-[#629FAD]/70 group"
               >
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex h-14 w-14 items-center justify-center rounded-full bg-linear-to-br from-[#629FAD] to-[#296374] text-white font-bold text-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
@@ -116,10 +116,10 @@ export default function Landing() {
                   </div>
                   <span className="text-4xl group-hover:scale-125 transition-transform duration-300">{step.emoji}</span>
                 </div>
-                <h3 className="text-xl font-bold text-white group-hover:text-[#629FAD] transition-colors duration-300">
+                <h3 className="text-xl font-bold text-white group-hover:text-[#629FAD] transition-colors duration-300 drop-shadow-lg">
                   {step.title}
                 </h3>
-                <p className="mt-3 text-base text-[#EDEDCE]/80 leading-relaxed">{step.description}</p>
+                <p className="mt-3 text-base text-[#EDEDCE] leading-relaxed">{step.description}</p>
               </Card>
             ))}
           </div>
@@ -128,24 +128,24 @@ export default function Landing() {
 
       <section className="bg-linear-to-br from-[#296374] to-[#0C2C55]">
         <Container className="py-20 sm:py-28">
-          <div ref={ctaRef} className="rounded-3xl border-2 border-[#629FAD]/40 bg-linear-to-r from-[#629FAD]/20 to-[#296374]/20 backdrop-blur-xl p-10 text-white opacity-0 sm:p-16 relative overflow-hidden group hover:border-[#629FAD]/60 transition-all duration-500">
-            <div className="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-[#629FAD]/20 blur-3xl group-hover:scale-150 transition-transform duration-700" />
-            <div className="absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-[#296374]/20 blur-3xl group-hover:scale-150 transition-transform duration-700" />
+          <div ref={ctaRef} className="rounded-3xl border-2 border-[#629FAD]/50 bg-gradient-to-r from-[#0C2C55]/95 to-[#296374]/90 backdrop-blur-xl p-10 text-white opacity-0 sm:p-16 relative overflow-hidden group hover:border-[#629FAD]/80 transition-all duration-500 shadow-2xl">
+            <div className="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-[#629FAD]/30 blur-3xl group-hover:scale-150 transition-transform duration-700" />
+            <div className="absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-[#296374]/30 blur-3xl group-hover:scale-150 transition-transform duration-700" />
             <div className="relative flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-sm uppercase tracking-[0.3em] text-[#629FAD] font-bold">
+                <p className="text-sm uppercase tracking-[0.3em] text-[#629FAD] font-bold drop-shadow-lg">
                   🎯 READY TO BEGIN?
                 </p>
-                <h3 className="mt-4 text-3xl font-bold sm:text-4xl">
+                <h3 className="mt-4 text-3xl font-bold sm:text-4xl drop-shadow-lg">
                   Upload your resume and unlock<br />tailored coaching.
                 </h3>
-                <p className="mt-4 text-lg text-[#EDEDCE]/80">
+                <p className="mt-4 text-lg text-[#EDEDCE]">
                   Your dream job won't wait forever. <span className="text-[#629FAD] font-semibold">(But we will, patiently.)</span>
                 </p>
               </div>
               <Button
                 size="lg"
-                className="bg-white text-[#0C2C55] hover:bg-[#EDEDCE] transform hover:scale-110 transition-all duration-200 shadow-xl px-8 py-4 font-bold"
+                className="bg-white text-[#0C2C55] hover:bg-[#629FAD] hover:text-white font-bold transform hover:scale-110 transition-all duration-300 shadow-2xl hover:shadow-[#629FAD]/60 px-8 py-4"
                 onClick={() => navigate("/resume")}
               >
                 🎯 Get started free

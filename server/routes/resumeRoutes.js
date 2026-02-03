@@ -150,4 +150,15 @@ Output ONLY the JSON object.
   }
 });
 
+// GET USER RESUMES
+router.get("/user", async (req, res) => {
+  try {
+    const resumes = await Resume.find({ userId: req.user.uid }).sort({ createdAt: -1 });
+    res.json(resumes);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch resumes" });
+  }
+});
+
 export default router;

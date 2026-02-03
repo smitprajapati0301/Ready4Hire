@@ -200,4 +200,17 @@ Return only the question text.
   }
 });
 
+// GET USER INTERVIEWS
+router.get("/user", async (req, res) => {
+  try {
+    const interviews = await InterviewLog.find({ userId: req.user.uid })
+      .populate("resumeId", "name skills") // Populate basic resume info
+      .sort({ createdAt: -1 });
+    res.json(interviews);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch interviews" });
+  }
+});
+
 export default router;

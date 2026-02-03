@@ -147,7 +147,7 @@ export default function Resume() {
 
       <Container className="py-12 sm:py-16">
         <div className="grid gap-8 lg:grid-cols-[1.1fr,0.9fr]">
-          <Card ref={uploadRef} className="p-8 sm:p-10 opacity-0 bg-white/10 backdrop-blur-lg border-[#629FAD]/30 hover:border-[#629FAD]/50 transition-all duration-300">
+          <Card ref={uploadRef} className="p-8 sm:p-10 opacity-0 bg-gradient-to-br from-[#296374]/90 to-[#0C2C55]/95 backdrop-blur-xl border-2 border-[#629FAD]/40 hover:border-[#629FAD]/60 transition-all duration-300 shadow-xl">
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -236,16 +236,24 @@ export default function Resume() {
             </div>
           </Card>
 
-          <Panel title="What you'll receive" className="bg-white/10 backdrop-blur-lg border-[#629FAD]/30 text-[#EDEDCE]">
-            <p className="flex items-center gap-2 text-[#EDEDCE]/80">📊 ATS score with clear ranking (no sugarcoating)</p>
-            <p className="flex items-center gap-2 text-[#EDEDCE]/80">📝 Missing sections you should add (oops!)</p>
-            <p className="flex items-center gap-2 text-[#EDEDCE]/80">🎯 Targeted suggestions to improve impact</p>
-            <p className="flex items-center gap-2 text-[#EDEDCE]/80">✨ Extracted identity and skills highlights</p>
+          <Panel title="What you'll receive" className="bg-gradient-to-br from-[#0C2C55]/90 to-[#296374]/95 backdrop-blur-xl border border-[#629FAD]/30 text-[#EDEDCE] shadow-2xl">
+            <p className="flex items-center gap-2 text-[#EDEDCE]/90 font-medium">
+              <span className="text-xl">📊</span> ATS score with clear ranking
+            </p>
+            <p className="flex items-center gap-2 text-[#EDEDCE]/90 font-medium">
+              <span className="text-xl">📝</span> Missing sections analysis
+            </p>
+            <p className="flex items-center gap-2 text-[#EDEDCE]/90 font-medium">
+              <span className="text-xl">🎯</span> Impact improvement tips
+            </p>
+            <p className="flex items-center gap-2 text-[#EDEDCE]/90 font-medium">
+              <span className="text-xl">✨</span> Skills extraction
+            </p>
           </Panel>
         </div>
 
         {result && (
-          <Card ref={resultRef} className="mt-10 p-8 sm:p-12 bg-white/10 backdrop-blur-lg border-[#629FAD]/30 hover:border-[#629FAD]/50 transition-all duration-300 animate-blur-in">
+          <Card ref={resultRef} className="mt-10 p-8 sm:p-12 bg-gradient-to-br from-[#0C2C55]/95 to-[#296374]/90 backdrop-blur-xl border-2 border-[#629FAD]/40 hover:border-[#629FAD]/60 transition-all duration-300 animate-blur-in shadow-2xl">
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="space-y-2">
@@ -272,11 +280,11 @@ export default function Resume() {
                   <h4 className="text-lg font-bold text-white flex items-center gap-2">
                     <span className="text-2xl">🚨</span> Missing Sections
                   </h4>
-                  <ul className="space-y-3 text-base text-[#EDEDCE]/80">
+                  <ul className="space-y-3 text-base text-[#EDEDCE]/90">
                     {result.missing?.length > 0 ? (
                       result.missing.map((item, index) => (
-                        <li key={index} className="flex items-start gap-3 p-3 rounded-lg bg-[#296374]/20 border border-[#629FAD]/20 hover:border-[#629FAD]/40 transition-colors duration-200">
-                          <span className="text-red-400 font-bold">•</span>
+                        <li key={index} className="flex items-start gap-3 p-4 rounded-lg bg-[#0C2C55]/50 border border-[#629FAD]/30 hover:border-[#629FAD]/50 transition-colors duration-200 shadow-sm">
+                          <span className="text-red-400 font-bold mt-0.5">•</span>
                           <span>{item}</span>
                         </li>
                       ))
@@ -289,11 +297,11 @@ export default function Resume() {
                   <h4 className="text-lg font-bold text-white flex items-center gap-2">
                     <span className="text-2xl">💡</span> Suggestions
                   </h4>
-                  <ul className="space-y-3 text-base text-[#EDEDCE]/80">
+                  <ul className="space-y-3 text-base text-[#EDEDCE]/90">
                     {result.suggestions?.length > 0 ? (
                       result.suggestions.map((item, index) => (
-                        <li key={index} className="flex items-start gap-3 p-3 rounded-lg bg-[#296374]/20 border border-[#629FAD]/20 hover:border-[#629FAD]/40 transition-colors duration-200">
-                          <span className="text-[#629FAD] font-bold">•</span>
+                        <li key={index} className="flex items-start gap-3 p-4 rounded-lg bg-[#0C2C55]/50 border border-[#629FAD]/30 hover:border-[#629FAD]/50 transition-colors duration-200 shadow-sm">
+                          <span className="text-[#629FAD] font-bold mt-0.5">•</span>
                           <span>{item}</span>
                         </li>
                       ))
@@ -311,15 +319,15 @@ export default function Resume() {
                   <span className="text-2xl">📋</span> Extracted Info
                 </h4>
                 <div className="grid gap-4 text-base sm:grid-cols-3">
-                  <div className="p-4 rounded-lg bg-[#296374]/20 border border-[#629FAD]/20">
+                  <div className="p-5 rounded-lg bg-[#0C2C55]/50 border border-[#629FAD]/30 shadow-sm">
                     <p className="text-xs text-[#629FAD] font-semibold uppercase tracking-wider mb-2">Name</p>
                     <p className="text-white font-semibold">{result.name || "Not found"}</p>
                   </div>
-                  <div className="p-4 rounded-lg bg-[#296374]/20 border border-[#629FAD]/20">
+                  <div className="p-5 rounded-lg bg-[#0C2C55]/50 border border-[#629FAD]/30 shadow-sm">
                     <p className="text-xs text-[#629FAD] font-semibold uppercase tracking-wider mb-2">Email</p>
                     <p className="text-white font-semibold break-all">{result.email || "Not found"}</p>
                   </div>
-                  <div className="p-4 rounded-lg bg-[#296374]/20 border border-[#629FAD]/20">
+                  <div className="p-5 rounded-lg bg-[#0C2C55]/50 border border-[#629FAD]/30 shadow-sm">
                     <p className="text-xs text-[#629FAD] font-semibold uppercase tracking-wider mb-2">Skills</p>
                     <p className="text-white font-semibold">{result.skills?.join(", ") || "Not found"}</p>
                   </div>
@@ -336,9 +344,9 @@ export default function Resume() {
                     </h4>
                     <div className="grid gap-4">
                       {result.projects.map((project, index) => (
-                        <div key={index} className="p-4 rounded-lg bg-[#296374]/20 border border-[#629FAD]/20 hover:border-[#629FAD]/40 transition-colors duration-200">
+                        <div key={index} className="p-5 rounded-lg bg-[#0C2C55]/50 border border-[#629FAD]/30 hover:border-[#629FAD]/50 transition-colors duration-200 shadow-sm">
                           <p className="text-white font-semibold mb-1">{project.name || `Project ${index + 1}`}</p>
-                          {project.description && <p className="text-[#EDEDCE]/70 text-sm mb-2">{project.description}</p>}
+                          {project.description && <p className="text-[#EDEDCE]/80 text-sm mb-2 leading-relaxed">{project.description}</p>}
                           {project.technologies && project.technologies.length > 0 && (
                             <div className="flex flex-wrap gap-2 mb-2">
                               {project.technologies.map((tech, i) => (
@@ -349,7 +357,7 @@ export default function Resume() {
                             </div>
                           )}
                           {project.link && (
-                            <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[#629FAD] text-sm hover:underline">
+                            <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[#629FAD] text-sm hover:text-white transition-colors duration-200 hover:underline">
                               View Project →
                             </a>
                           )}
@@ -370,11 +378,11 @@ export default function Resume() {
                     </h4>
                     <div className="grid gap-4">
                       {result.education.map((edu, index) => (
-                        <div key={index} className="p-4 rounded-lg bg-[#296374]/20 border border-[#629FAD]/20">
+                        <div key={index} className="p-5 rounded-lg bg-[#0C2C55]/50 border border-[#629FAD]/30 shadow-sm">
                           <p className="text-white font-semibold">{edu.institution || `Institution ${index + 1}`}</p>
-                          {edu.degree && <p className="text-[#EDEDCE]/80 text-sm">{edu.degree}</p>}
-                          {edu.dates && <p className="text-[#629FAD] text-sm">{edu.dates}</p>}
-                          {edu.details && <p className="text-[#EDEDCE]/70 text-sm mt-1">{edu.details}</p>}
+                          {edu.degree && <p className="text-[#EDEDCE]/90 text-sm">{edu.degree}</p>}
+                          {edu.dates && <p className="text-[#629FAD] text-sm font-medium">{edu.dates}</p>}
+                          {edu.details && <p className="text-[#EDEDCE]/80 text-sm mt-1">{edu.details}</p>}
                         </div>
                       ))}
                     </div>
@@ -392,12 +400,12 @@ export default function Resume() {
                     </h4>
                     <div className="grid gap-4">
                       {result.experience.map((exp, index) => (
-                        <div key={index} className="p-4 rounded-lg bg-[#296374]/20 border border-[#629FAD]/20">
+                        <div key={index} className="p-5 rounded-lg bg-[#0C2C55]/50 border border-[#629FAD]/30 shadow-sm">
                           <p className="text-white font-semibold">{exp.title || `Position ${index + 1}`}</p>
-                          {exp.company && <p className="text-[#EDEDCE]/80">{exp.company}</p>}
-                          {exp.dates && <p className="text-[#629FAD] text-sm">{exp.dates}</p>}
+                          {exp.company && <p className="text-[#EDEDCE]/90">{exp.company}</p>}
+                          {exp.dates && <p className="text-[#629FAD] text-sm font-medium">{exp.dates}</p>}
                           {exp.description && exp.description.length > 0 && (
-                            <ul className="mt-2 space-y-1 text-[#EDEDCE]/70 text-sm">
+                            <ul className="mt-2 space-y-1 text-[#EDEDCE]/80 text-sm">
                               {exp.description.map((desc, i) => (
                                 <li key={i} className="flex items-start gap-2">
                                   <span className="text-[#629FAD] mt-1">•</span>

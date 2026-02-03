@@ -7,6 +7,8 @@ import Landing from "./pages/Landing";
 import Resume from "./pages/Resume";
 import Interview from "./pages/Interview";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import HowItWorks from "./pages/HowItWorks";
 import SiteShell from "./components/layout/SiteShell";
 
 export default function App() {
@@ -14,14 +16,15 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          {/* Public routes */}
+          {/* Public auth routes without navbar */}
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/landing" element={<Landing />} />
 
-          {/* Protected routes */}
+          {/* Routes with navbar */}
           <Route element={<SiteShell />}>
             <Route path="/" element={<Home />} />
+            <Route path="/landing" element={<Landing />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
             <Route
               path="/resume"
               element={
@@ -35,6 +38,14 @@ export default function App() {
               element={
                 <ProtectedRoute>
                   <Interview />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
                 </ProtectedRoute>
               }
             />

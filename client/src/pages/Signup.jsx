@@ -9,6 +9,7 @@ import {
 import { auth } from "../config/firebase";
 import axios from "axios";
 import { FcGoogle } from "react-icons/fc";
+import { LogoWithWordmark } from "../components/ui/Logo";
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
@@ -154,16 +155,19 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-indigo-600 to-purple-600 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-2 text-slate-900">
-          Ready4Hire
-        </h1>
-        <p className="text-center text-slate-600 mb-8">Create your account</p>
+    <div className="min-h-screen bg-linear-to-br from-[#0C2C55] via-[#296374] to-[#0C2C55] flex items-center justify-center p-4 relative overflow-hidden">
+      <div className="absolute inset-0 bg-grid opacity-10" />
+      <div className="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-[#629FAD]/20 blur-3xl animate-pulse" />
+      <div className="absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-[#296374]/20 blur-3xl animate-pulse" style={{ animationDelay: "1.5s" }} />
+      <div className="relative bg-white/10 backdrop-blur-lg border-2 border-[#629FAD]/30 rounded-3xl shadow-2xl p-8 w-full max-w-md hover:border-[#629FAD]/50 transition-all duration-300">
+        <div className="mb-6 flex justify-center">
+          <LogoWithWordmark iconSize={48} />
+        </div>
+        <p className="text-center text-[#EDEDCE]/80 mb-8">Create your account</p>
 
         <form onSubmit={handleSignup} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+            <label className="block text-sm font-medium text-[#EDEDCE] mb-2">
               Full Name
             </label>
             <input
@@ -171,13 +175,13 @@ export default function Signup() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="John Doe"
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-4 py-2 bg-white/10 backdrop-blur-sm border border-[#629FAD]/30 rounded-lg focus:ring-2 focus:ring-[#629FAD] focus:border-[#629FAD] text-white placeholder:text-[#EDEDCE]/50 transition-all duration-200"
               disabled={loading}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+            <label className="block text-sm font-medium text-[#EDEDCE] mb-2">
               Email
             </label>
             <input
@@ -185,13 +189,13 @@ export default function Signup() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-4 py-2 bg-white/10 backdrop-blur-sm border border-[#629FAD]/30 rounded-lg focus:ring-2 focus:ring-[#629FAD] focus:border-[#629FAD] text-white placeholder:text-[#EDEDCE]/50 transition-all duration-200"
               disabled={loading}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+            <label className="block text-sm font-medium text-[#EDEDCE] mb-2">
               Password
             </label>
             <input
@@ -199,13 +203,13 @@ export default function Signup() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="At least 6 characters"
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-4 py-2 bg-white/10 backdrop-blur-sm border border-[#629FAD]/30 rounded-lg focus:ring-2 focus:ring-[#629FAD] focus:border-[#629FAD] text-white placeholder:text-[#EDEDCE]/50 transition-all duration-200"
               disabled={loading}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+            <label className="block text-sm font-medium text-[#EDEDCE] mb-2">
               Confirm Password
             </label>
             <input
@@ -213,13 +217,13 @@ export default function Signup() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm your password"
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-4 py-2 bg-white/10 backdrop-blur-sm border border-[#629FAD]/30 rounded-lg focus:ring-2 focus:ring-[#629FAD] focus:border-[#629FAD] text-white placeholder:text-[#EDEDCE]/50 transition-all duration-200"
               disabled={loading}
             />
           </div>
 
           {error && (
-            <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+            <div className="p-3 bg-red-500/20 backdrop-blur-sm border border-red-400/50 text-red-200 rounded-lg text-sm">
               {error}
             </div>
           )}
@@ -227,7 +231,7 @@ export default function Signup() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-400 text-white font-semibold py-2 rounded-lg transition"
+            className="w-full bg-linear-to-r from-[#629FAD] to-[#296374] hover:from-[#7bb6c3] hover:to-[#3a7a8a] disabled:from-slate-600 disabled:to-slate-700 text-white font-semibold py-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-[#629FAD]/50"
           >
             {loading ? "Creating Account..." : "Sign Up"}
           </button>
@@ -236,10 +240,10 @@ export default function Signup() {
         <div className="my-6">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-300"></div>
+              <div className="w-full border-t border-[#629FAD]/30"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-slate-500">or continue with</span>
+              <span className="px-2 bg-transparent text-[#EDEDCE]/60">or continue with</span>
             </div>
           </div>
         </div>
@@ -247,17 +251,17 @@ export default function Signup() {
         <button
           onClick={handleGoogleSignup}
           disabled={loading}
-          className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-slate-300 rounded-lg hover:bg-slate-50 disabled:bg-slate-100 transition"
+          className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-[#629FAD]/30 rounded-lg hover:bg-white/20 hover:border-[#629FAD]/50 disabled:bg-white/5 transition-all duration-200"
         >
           <FcGoogle size={20} />
-          <span className="text-slate-700 font-medium">Google</span>
+          <span className="text-[#EDEDCE] font-medium">Google</span>
         </button>
 
-        <p className="text-center text-sm text-slate-600 mt-6">
+        <p className="text-center text-sm text-[#EDEDCE]/80 mt-6">
           Already have an account?{" "}
           <button
             onClick={() => navigate("/login")}
-            className="text-indigo-600 hover:text-indigo-700 font-semibold"
+            className="text-[#629FAD] hover:text-[#7bb6c3] font-semibold transition-colors duration-200"
           >
             Login
           </button>

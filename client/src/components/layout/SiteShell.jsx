@@ -2,10 +2,12 @@ import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Container from "../ui/Container";
+import { LogoHorizontal, LogoCompact } from "../ui/Logo";
 
 const navItems = [
   { label: "Home", to: "/" },
   { label: "Overview", to: "/landing" },
+  { label: "How It Works", to: "/how-it-works" },
   { label: "Resume", to: "/resume" },
   { label: "Interview", to: "/interview" },
 ];
@@ -29,15 +31,11 @@ export default function SiteShell() {
     <div className="min-h-screen bg-[#0C2C55] text-[#EDEDCE]">
       <header className="sticky top-0 z-30 border-b border-[#629FAD]/20 bg-[#0C2C55]/90 backdrop-blur-xl shadow-lg shadow-[#0C2C55]/50">
         <Container className="flex items-center justify-between py-4">
-          <div className="flex items-center gap-3 group">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-[#629FAD] to-[#296374] text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
-              R4H
+          <NavLink to="/" className="flex items-center gap-3 group cursor-pointer hover:opacity-80 transition-opacity">
+            <div className="text-[#629FAD] group-hover:scale-110 transition-transform duration-300">
+              <LogoHorizontal iconSize={40} dark={true} />
             </div>
-            <div className="leading-tight">
-              <p className="text-base font-bold text-white group-hover:text-[#629FAD] transition-colors duration-300">Ready4Hire</p>
-              <p className="text-xs text-[#629FAD]">🤖 AI Career Coach</p>
-            </div>
-          </div>
+          </NavLink>
           <nav className="hidden items-center gap-6 text-sm font-semibold md:flex">
             {navItems.map((item) => (
               <NavLink
@@ -81,6 +79,13 @@ export default function SiteShell() {
                       <p className="text-sm font-semibold text-slate-900">{user.name}</p>
                       <p className="text-xs text-slate-500">{user.email}</p>
                     </div>
+                    <NavLink
+                      to="/profile"
+                      onClick={() => setShowDropdown(false)}
+                      className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                    >
+                      Profile
+                    </NavLink>
                     <button
                       onClick={() => {
                         setShowDropdown(false);
@@ -156,6 +161,13 @@ export default function SiteShell() {
                       <p className="text-xs text-[#629FAD]">{user.email}</p>
                     </div>
                   </div>
+                  <NavLink
+                    to="/profile"
+                    onClick={() => setMenuOpen(false)}
+                    className="block w-full text-left py-2 text-sm text-[#EDEDCE] hover:text-[#629FAD] transition-colors"
+                  >
+                    Profile
+                  </NavLink>
                   <button
                     onClick={() => {
                       setMenuOpen(false);
@@ -198,14 +210,8 @@ export default function SiteShell() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {/* Brand */}
             <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-[#629FAD] to-[#296374] text-white font-bold shadow-lg">
-                  R4H
-                </div>
-                <div>
-                  <p className="font-bold text-white">Ready4Hire</p>
-                  <p className="text-xs text-[#629FAD]">AI Career Coach</p>
-                </div>
+              <div className="flex items-center gap-2">
+                <LogoCompact size={150} />
               </div>
               <p className="text-sm text-[#EDEDCE]/70 leading-relaxed">
                 Helping you ace interviews and perfect your resume. One AI conversation at a time. 🚀
