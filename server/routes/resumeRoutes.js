@@ -65,6 +65,12 @@ Return ONLY valid JSON in this format:
   "missing": [],
   "suggestions": []
 }
+
+ATS scoring rules:
+- "atsScore" must be an integer between 0 and 100.
+- Score based on resume completeness, clarity, relevant skills, projects, and experience.
+- For a normal non-empty resume, do NOT return 0.
+- Return only the number for "atsScore" (not strings like "78/100").
 `;
 
     const result = await groq.chat.completions.create({
@@ -108,6 +114,65 @@ Return ONLY valid JSON in this format:
     // =========================
     const normalizeArray = (value) => (Array.isArray(value) ? value : []);
 
+    const clampScore = (value) => Math.max(0, Math.min(100, Math.round(value)));
+
+    const computeHeuristicAtsScore = ({
+      resumeText,
+      skills,
+      projects,
+      education,
+      experience,
+      missing,
+    }) => {
+      let score = 35;
+
+      const textLength = (resumeText || "").trim().length;
+      if (textLength > 1800) score += 10;
+      else if (textLength > 1000) score += 8;
+      else if (textLength > 500) score += 5;
+      else if (textLength > 250) score += 3;
+
+      score += Math.min(normalizeArray(skills).length * 2, 16);
+      score += Math.min(normalizeArray(projects).length * 4, 18);
+      score += Math.min(normalizeArray(education).length * 5, 12);
+      score += Math.min(normalizeArray(experience).length * 6, 18);
+      score -= Math.min(normalizeArray(missing).length * 3, 15);
+
+      return Math.max(20, Math.min(98, Math.round(score)));
+    };
+
+    const normalizeAtsScore = (rawScore, fallbackScore, resumeText) => {
+      let parsedScore = null;
+
+      if (typeof rawScore === "number" && Number.isFinite(rawScore)) {
+        parsedScore = rawScore;
+      } else if (typeof rawScore === "string") {
+        const match = rawScore.match(/-?\d+(\.\d+)?/);
+        if (match) {
+          parsedScore = Number(match[0]);
+        }
+      } else if (rawScore && typeof rawScore === "object") {
+        const nested = rawScore.score ?? rawScore.value;
+        if (typeof nested === "number" && Number.isFinite(nested)) {
+          parsedScore = nested;
+        }
+      }
+
+      if (!Number.isFinite(parsedScore)) {
+        return clampScore(fallbackScore);
+      }
+
+      const normalized = clampScore(parsedScore);
+      const hasMeaningfulText = (resumeText || "").trim().length > 200;
+
+      // Guard against model defaulting to 0 for normal resumes.
+      if (normalized === 0 && hasMeaningfulText) {
+        return clampScore(fallbackScore);
+      }
+
+      return normalized;
+    };
+
     const normalizeProjects = normalizeArray(aiResult.projects).map((item) => {
       if (typeof item === "string") {
         return { name: item };
@@ -134,11 +199,27 @@ Return ONLY valid JSON in this format:
       }
     );
 
+    const heuristicAtsScore = computeHeuristicAtsScore({
+      resumeText: text,
+      skills: aiResult.skills,
+      projects: normalizeProjects,
+      education: normalizeEducation,
+      experience: normalizeExperience,
+      missing: aiResult.missing,
+    });
+
+    const atsScore = normalizeAtsScore(
+      aiResult.atsScore,
+      heuristicAtsScore,
+      text
+    );
+
     // =========================
     // SAVE TO DATABASE
     // =========================
     const saved = await Resume.create({
       ...aiResult,
+      atsScore,
       userId: req.user.uid,
       projects: normalizeProjects,
       education: normalizeEducation,
