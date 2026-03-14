@@ -66,11 +66,11 @@ Return ONLY valid JSON in this format:
   "suggestions": []
 }
 
-ATS scoring rules:
-- "atsScore" must be an integer between 0 and 100.
-- Score based on resume completeness, clarity, relevant skills, projects, and experience.
-- For a normal non-empty resume, do NOT return 0.
-- Return only the number for "atsScore" (not strings like "78/100").
+Rules:
+- atsScore must be an integer between 0 and 100
+- Do NOT include comments
+- Do NOT include markdown
+- Return pure JSON only
 `;
 
     const result = await groq.chat.completions.create({
@@ -85,7 +85,6 @@ ATS scoring rules:
     // =========================
     const clean = response.replace(/```json|```/g, "").trim();
 
-    // Extract JSON safely
     const jsonStart = clean.indexOf("{");
     const jsonEnd = clean.lastIndexOf("}") + 1;
 
@@ -96,7 +95,14 @@ ATS scoring rules:
       });
     }
 
-    const jsonString = clean.slice(jsonStart, jsonEnd);
+    let jsonString = clean.slice(jsonStart, jsonEnd);
+
+    // Remove comments
+    jsonString = jsonString.replace(/\/\/.*$/gm, "");
+
+    // Remove trailing commas
+    jsonString = jsonString.replace(/,\s*}/g, "}");
+    jsonString = jsonString.replace(/,\s*]/g, "]");
 
     let aiResult;
 
@@ -148,14 +154,7 @@ ATS scoring rules:
         parsedScore = rawScore;
       } else if (typeof rawScore === "string") {
         const match = rawScore.match(/-?\d+(\.\d+)?/);
-        if (match) {
-          parsedScore = Number(match[0]);
-        }
-      } else if (rawScore && typeof rawScore === "object") {
-        const nested = rawScore.score ?? rawScore.value;
-        if (typeof nested === "number" && Number.isFinite(nested)) {
-          parsedScore = nested;
-        }
+        if (match) parsedScore = Number(match[0]);
       }
 
       if (!Number.isFinite(parsedScore)) {
@@ -165,7 +164,6 @@ ATS scoring rules:
       const normalized = clampScore(parsedScore);
       const hasMeaningfulText = (resumeText || "").trim().length > 200;
 
-      // Guard against model defaulting to 0 for normal resumes.
       if (normalized === 0 && hasMeaningfulText) {
         return clampScore(fallbackScore);
       }
@@ -236,7 +234,6 @@ ATS scoring rules:
       error: error.message,
     });
   } finally {
-    // Delete uploaded file
     if (uploadedFilePath && fs.existsSync(uploadedFilePath)) {
       fs.unlink(uploadedFilePath, (err) => {
         if (err) console.error("Failed to delete file:", err);
