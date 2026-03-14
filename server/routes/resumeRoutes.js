@@ -106,14 +106,24 @@ Rules:
 
     let aiResult;
 
-    try {
-      aiResult = JSON.parse(jsonString);
-    } catch (err) {
-      console.error("JSON Parse Error:", jsonString);
-      return res.status(500).json({
-        message: "Failed to parse AI response",
-      });
-    }
+try {
+  aiResult = JSON.parse(jsonString);
+} catch (err) {
+  console.error("JSON Parse Error:", jsonString);
+
+  // fallback minimal structure so API doesn't crash
+  aiResult = {
+    name: "",
+    email: "",
+    skills: [],
+    projects: [],
+    education: [],
+    experience: [],
+    atsScore: 0,
+    missing: [],
+    suggestions: [],
+  };
+}
 
     // =========================
     // NORMALIZE DATA
