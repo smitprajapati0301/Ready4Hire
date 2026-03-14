@@ -8,6 +8,7 @@ import {
 import { auth } from "../config/firebase";
 import { FcGoogle } from "react-icons/fc";
 import { LogoWithWordmark } from "../components/ui/Logo";
+import { getGoogleAuthErrorMessage } from "../utils/authErrors";
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
@@ -22,6 +23,26 @@ export default function Login() {
   const [error, setError] = useState("");
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+
+  const verifyUserExists = async (idToken, uid) => {
+    const response = await fetch(`${BACKEND_URL}/api/users/${uid}`, {
+      headers: { Authorization: `Bearer ${idToken}` },
+    });
+
+    if (response.status === 404) {
+      throw new Error("User not found. Please sign up first.");
+    }
+
+    if (response.status === 401 || response.status === 403) {
+      throw new Error("Your session could not be verified. Please try again.");
+    }
+
+    if (!response.ok) {
+      throw new Error("We couldn't verify your account right now. Please try again.");
+    }
+
+    return response.json();
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -43,16 +64,7 @@ export default function Login() {
       const idToken = await firebaseUser.getIdToken();
 
       // Verify user exists in backend
-      const response = await fetch(
-        `${BACKEND_URL}/api/users/${firebaseUser.uid}`,
-        {
-          headers: { Authorization: `Bearer ${idToken}` },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("User not found. Please sign up first.");
-      }
+      await verifyUserExists(idToken, firebaseUser.uid);
 
       localStorage.setItem("idToken", idToken);
 
@@ -89,18 +101,7 @@ export default function Login() {
       const idToken = await firebaseUser.getIdToken();
 
       // Verify user exists in backend
-      const response = await fetch(
-        `${BACKEND_URL}/api/users/${firebaseUser.uid}`,
-        {
-          headers: { Authorization: `Bearer ${idToken}` },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("User not found. Please sign up first.");
-      }
-
-      const userData = await response.json();
+      const userData = await verifyUserExists(idToken, firebaseUser.uid);
       console.log("User found in MongoDB:", userData);
 
       localStorage.setItem("idToken", idToken);
@@ -111,12 +112,14 @@ export default function Login() {
     } catch (err) {
       console.error("Google login error:", err);
       setLoading(false);
-      if (err.code === "auth/popup-closed-by-user") {
-        setError("Login cancelled. Please try again.");
-      } else if (err.code === "auth/popup-blocked") {
-        setError("Popup blocked. Please allow popups and try again.");
+      const googleAuthMessage = getGoogleAuthErrorMessage(err, "Login");
+
+      if (googleAuthMessage) {
+        setError(googleAuthMessage);
       } else if (err.message?.includes("User not found")) {
         setError("No account found. Please sign up first with Google.");
+      } else if (err.message?.includes("could not be verified")) {
+        setError(err.message);
       } else {
         setError("Google login failed. Please try again.");
       }

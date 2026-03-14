@@ -2,8 +2,39 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 import axios from "axios";
+import {
+  getUserProfileErrorMessage,
+  isUserProfileMissingError,
+} from "../utils/authErrors";
 
 const AuthContext = createContext(null);
+const USER_FETCH_RETRY_DELAYS = [0, 250, 750];
+
+async function fetchUserProfile(backendUrl, uid, idToken) {
+  let lastError = null;
+
+  for (const delay of USER_FETCH_RETRY_DELAYS) {
+    if (delay > 0) {
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
+
+    try {
+      const res = await axios.get(`${backendUrl}/api/users/${uid}`, {
+        headers: { Authorization: `Bearer ${idToken}` },
+      });
+
+      return res.data;
+    } catch (err) {
+      lastError = err;
+
+      if (!isUserProfileMissingError(err) || delay === USER_FETCH_RETRY_DELAYS.at(-1)) {
+        throw err;
+      }
+    }
+  }
+
+  throw lastError;
+}
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -19,26 +50,30 @@ export function AuthProvider({ children }) {
       try {
         if (fbUser) {
           setFirebaseUser(fbUser);
+          setError(null);
 
           // Get ID token and fetch user data from backend
           const idToken = await fbUser.getIdToken();
 
           try {
-            const res = await axios.get(`${BACKEND_URL}/api/users/${fbUser.uid}`, {
-              headers: { Authorization: `Bearer ${idToken}` },
-            });
-            setUser(res.data);
+            const userProfile = await fetchUserProfile(BACKEND_URL, fbUser.uid, idToken);
+            setUser(userProfile);
             localStorage.setItem("idToken", idToken);
           } catch (err) {
-            // User not found in DB (not signed up yet)
-            console.error("User fetch error:", err);
-            setError("User not found in database. Please sign up.");
+            if (isUserProfileMissingError(err)) {
+              console.warn("User profile lookup returned 404 for Firebase account:", fbUser.uid);
+            } else {
+              console.error("User fetch error:", err);
+            }
+
+            setError(getUserProfileErrorMessage(err));
             setUser(null);
             localStorage.removeItem("idToken");
           }
         } else {
           setUser(null);
           setFirebaseUser(null);
+          setError(null);
           localStorage.removeItem("idToken");
         }
       } catch (err) {

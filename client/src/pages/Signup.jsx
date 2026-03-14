@@ -10,6 +10,7 @@ import { auth } from "../config/firebase";
 import axios from "axios";
 import { FcGoogle } from "react-icons/fc";
 import { LogoWithWordmark } from "../components/ui/Logo";
+import { getGoogleAuthErrorMessage } from "../utils/authErrors";
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
@@ -144,10 +145,10 @@ export default function Signup() {
     } catch (err) {
       console.error("Google signup error:", err);
       setLoading(false);
-      if (err.code === "auth/popup-closed-by-user") {
-        setError("Sign up cancelled. Please try again.");
-      } else if (err.code === "auth/popup-blocked") {
-        setError("Popup blocked. Please allow popups and try again.");
+      const googleAuthMessage = getGoogleAuthErrorMessage(err, "Sign up");
+
+      if (googleAuthMessage) {
+        setError(googleAuthMessage);
       } else {
         setError(err.message || "Failed to sign up with Google. Please try again.");
       }

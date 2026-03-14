@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<footer>
+  <style>
+    <borderTop>border-[#629FAD]/20</borderTop>
+    <background>bg-linear-to-br from-[#0C2C55] to-[#296374]</background>
+  </style>
+
+  <container class="py-12">
+    <columns class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+
+      <section id="brand" class="space-y-4">
+        <logo type="LogoCompact" size="150" />
+        <description class="text-sm text-[#EDEDCE]/70 leading-relaxed">
+          Helping you ace interviews and perfect your resume. One AI conversation at a time. 🚀
+        </description>
+      </section>
+
+      <section id="quick-links" class="space-y-4">
+        <title class="text-sm font-bold text-[#629FAD] uppercase tracking-wider">Quick Links</title>
+        <links class="flex flex-col gap-2 text-sm">
+          <link to="/" class="text-[#EDEDCE]/70 hover:text-[#629FAD] transition-colors duration-200 hover:translate-x-1 inline-block">Home</link>
+          <link to="/landing" class="text-[#EDEDCE]/70 hover:text-[#629FAD] transition-colors duration-200 hover:translate-x-1 inline-block">Overview</link>
+          <link to="/how-it-works" class="text-[#EDEDCE]/70 hover:text-[#629FAD] transition-colors duration-200 hover:translate-x-1 inline-block">How It Works</link>
+          <link to="/resume" class="text-[#EDEDCE]/70 hover:text-[#629FAD] transition-colors duration-200 hover:translate-x-1 inline-block">Resume</link>
+          <link to="/interview" class="text-[#EDEDCE]/70 hover:text-[#629FAD] transition-colors duration-200 hover:translate-x-1 inline-block">Interview</link>
+        </links>
+      </section>
+
+      <section id="creators" class="space-y-4">
+        <title class="text-sm font-bold text-[#629FAD] uppercase tracking-wider">Created By</title>
+        <creator class="group">
+          <name class="font-semibold text-white mb-1">Smit Prajapati</name>
+          <social class="flex gap-3">
+            <linkedin href="https://www.linkedin.com/in/smit-prajapati-a375a7284/" target="_blank" rel="noopener noreferrer" class="text-[#629FAD] hover:text-white transition-colors duration-200">LinkedIn</linkedin>
+            <github href="https://github.com/smitprajapati0301" target="_blank" rel="noopener noreferrer" class="text-[#629FAD] hover:text-white transition-colors duration-200">GitHub</github>
+          </social>
+        </creator>
+        <creator class="group">
+          <name class="font-semibold text-white mb-1">Om Patel</name>
+          <social class="flex gap-3">
+            <linkedin href="https://www.linkedin.com/in/om-patel-8aa186284/" target="_blank" rel="noopener noreferrer" class="text-[#629FAD] hover:text-white transition-colors duration-200">LinkedIn</linkedin>
+            <github href="https://github.com/OMPATEL122006" target="_blank" rel="noopener noreferrer" class="text-[#629FAD] hover:text-white transition-colors duration-200">GitHub</github>
+          </social>
+        </creator>
+      </section>
+
+      <section id="support" class="space-y-4">
+        <title class="text-sm font-bold text-[#629FAD] uppercase tracking-wider">Support</title>
+        <actions class="flex flex-col gap-2 text-sm text-[#EDEDCE]/70">
+          <action class="text-left hover:text-[#629FAD] transition-colors duration-200 hover:translate-x-1">Privacy Policy</action>
+          <action class="text-left hover:text-[#629FAD] transition-colors duration-200 hover:translate-x-1">Terms of Service</action>
+          <action class="text-left hover:text-[#629FAD] transition-colors duration-200 hover:translate-x-1">Contact Support</action>
+        </actions>
+      </section>
+
+    </columns>
+
+    <bottom-bar class="mt-12 pt-8 border-t border-[#629FAD]/20">
+      <content class="flex flex-col gap-4 text-sm text-[#EDEDCE]/60 md:flex-row md:items-center md:justify-between">
+        <copyright>© 2026 Ready4Hire. Built with 💙 and a lot of ☕. All rights reserved.</copyright>
+        <tagline class="text-[#629FAD]/80">Making job hunting less painful, one click at a time.</tagline>
+      </content>
+    </bottom-bar>
+  </container>
+</footer>
