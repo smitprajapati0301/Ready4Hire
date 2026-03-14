@@ -8,6 +8,8 @@ import Resume from "../models/Resume.js";
 const router = express.Router();
 
 router.post("/upload", upload.single("resume"), async (req, res) => {
+  let uploadedFilePath = null;
+
   try {
     // Import groq.js HERE - after dotenv.config() has run
     const groq = (await import("../config/groq.js")).default;
@@ -16,8 +18,16 @@ router.post("/upload", upload.single("resume"), async (req, res) => {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
+    uploadedFilePath = req.file.path;
+
+    if (!uploadedFilePath || !fs.existsSync(uploadedFilePath)) {
+      return res.status(500).json({
+        message: "Uploaded file was not found on server",
+      });
+    }
+
     // PDF → Text
-    const pdfBytes = new Uint8Array(fs.readFileSync(req.file.path));
+    const pdfBytes = new Uint8Array(await fs.promises.readFile(uploadedFilePath));
     const pdf = await pdfjsLib.getDocument({ data: pdfBytes }).promise;
 
     let text = "";
@@ -135,11 +145,6 @@ Output ONLY the JSON object.
       experience: normalizeExperience,
       rawText: text,
     });
-    // after you save to MongoDB and before res.json(...)
-    fs.unlink(req.file.path, (err) => {
-      if (err) console.error("Failed to delete file:", err);
-    });
-
 
     res.json(saved);
 
@@ -147,6 +152,14 @@ Output ONLY the JSON object.
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Processing failed", error: error.message });
+  } finally {
+    if (uploadedFilePath && fs.existsSync(uploadedFilePath)) {
+      fs.unlink(uploadedFilePath, (err) => {
+        if (err) {
+          console.error("Failed to delete file:", err);
+        }
+      });
+    }
   }
 });
 
